@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Component
@@ -35,6 +37,7 @@ public class Customer {
 	private String email;
 	@Column(name = "password")
 	private String password;
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	private List<Coupon> coupons = new ArrayList<>();
 	
@@ -44,6 +47,16 @@ public class Customer {
 	}
 
 	
+	public Customer(int id, String firstname, String lastname, String email, String password) {
+		super();
+		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.password = password;
+	}
+
+
 	public int getId() {
 		return id;
 	}

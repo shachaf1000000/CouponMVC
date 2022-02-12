@@ -33,7 +33,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer>,Compa
 			System.out.println("Company added.");
 			return addedCompany;
 		}else {
-			System.out.println("If this shows up, call ifty to fix. @addCompany");
+			System.out.println("If this shows up, call Shachaf to fix. @addCompany");
 			return company;
 		}
 	}

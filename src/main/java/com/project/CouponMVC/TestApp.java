@@ -13,19 +13,19 @@ import com.project.CouponMVC.enums.Category;
 import com.project.CouponMVC.enums.ClientType;
 import com.project.CouponMVC.exceptions.ConditionsNotMet;
 import com.project.CouponMVC.exceptions.IncorrectCredentials;
-import com.project.CouponMVC.facades.AdminFacade;
-import com.project.CouponMVC.facades.CompanyFacade;
-import com.project.CouponMVC.facades.CustomerFacade;
-import com.project.CouponMVC.facades.LoginManager;
+import com.project.CouponMVC.services.AdminService;
+import com.project.CouponMVC.services.CompanyService;
+import com.project.CouponMVC.services.CustomerService;
+import com.project.CouponMVC.services.LoginManager;
 import com.project.CouponMVC.utils.ScanManager;
 
 public class TestApp{
 
 	private ConfigurableApplicationContext ctx;
 	private LoginManager lm;
-	private AdminFacade AdminF = null;
-	private CompanyFacade CompanyF = null;
-	private CustomerFacade CustomerF = null;
+	private AdminService AdminF = null;
+	private CompanyService CompanyF = null;
+	private CustomerService CustomerF = null;
 
 	public TestApp(ConfigurableApplicationContext ctx, LoginManager lm) {
 		super();
@@ -39,17 +39,17 @@ public class TestApp{
 		try {
 			switch (clientType) {
 			case ADMIN:
-				AdminF = (AdminFacade) lm.login(email, password, clientType);
+				AdminF = (AdminService) lm.login(email, password, clientType);
 				CompanyF = null;
 				CustomerF = null;
 				break;
 			case COMPANY:
-				CompanyF = (CompanyFacade) lm.login(email, password, clientType);
+				CompanyF = (CompanyService) lm.login(email, password, clientType);
 				AdminF = null;
 				CustomerF = null;
 				break;
 			case CUSTOMER:
-				CustomerF = (CustomerFacade) lm.login(email, password, clientType);
+				CustomerF = (CustomerService) lm.login(email, password, clientType);
 				CompanyF = null;
 				AdminF = null;
 				break;

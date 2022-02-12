@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 @Scope("prototype")
@@ -32,12 +34,23 @@ public class Company {
 	private String email;
 	@Column(name = "password")
 	private String password;
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "company", orphanRemoval = true)
 	private List<Coupon> coupons = new ArrayList<>();
 	
 	public Company() {
 		super();
 	}
+
+	
+	public Company(int id, String name, String email, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
 
 	public int getId() {
 		return id;

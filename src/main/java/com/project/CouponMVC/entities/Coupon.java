@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.CouponMVC.enums.Category;
 
 @Entity
@@ -51,14 +52,30 @@ public class Coupon {
 	private String image;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company_id")
+	@JsonIgnore
 	private Company company;
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH, mappedBy = "coupons")
+	@JsonIgnore
 	private List<Customer> customers;
 
 	
 	public Coupon() {
 		super();
 	}
+	public Coupon(int id, Category category, String title, String description, LocalDate startDate, LocalDate endDate,
+			int amount, double price, String image) {
+		super();
+		this.id = id;
+		this.category = category;
+		this.title = title;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.amount = amount;
+		this.price = price;
+		this.image = image;
+	}
+
 
 	public int getId() {
 		return id;
@@ -141,9 +158,9 @@ public class Coupon {
 	}
 
 	/**
-	 * 
 	 * @return true if coupon is expired, else returns false.
 	 */
+	@JsonIgnore
 	public boolean isExpired() {
 		return LocalDate.now().isAfter(getEndDate());
 	}

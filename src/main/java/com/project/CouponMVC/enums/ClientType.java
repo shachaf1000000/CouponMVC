@@ -18,4 +18,21 @@ public enum ClientType {
 		}
 		return null;
 	}
+	
+	public static ClientType getClientTypeByString(String string) {
+		if(string==null)
+			return null;
+		switch(string.toUpperCase()) {
+		case "ADMIN":
+			return ADMIN;
+		case "COMPANY":
+			return COMPANY;
+		case "CUSTOMER":
+			return CUSTOMER;
+		default:
+			System.err.println("role fetched ("+string+") does not exist");
+			return null;
+		}
+	}
+	
 }

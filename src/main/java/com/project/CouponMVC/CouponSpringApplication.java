@@ -16,11 +16,11 @@ import com.project.CouponMVC.enums.Category;
 import com.project.CouponMVC.enums.ClientType;
 import com.project.CouponMVC.exceptions.ConditionsNotMet;
 import com.project.CouponMVC.exceptions.IncorrectCredentials;
-import com.project.CouponMVC.facades.AdminFacade;
-import com.project.CouponMVC.facades.ClientFacade;
-import com.project.CouponMVC.facades.CompanyFacade;
-import com.project.CouponMVC.facades.CustomerFacade;
-import com.project.CouponMVC.facades.LoginManager;
+import com.project.CouponMVC.services.AdminService;
+import com.project.CouponMVC.services.ClientService;
+import com.project.CouponMVC.services.CompanyService;
+import com.project.CouponMVC.services.CustomerService;
+import com.project.CouponMVC.services.LoginManager;
 
 @SpringBootApplication
 @EnableScheduling
@@ -36,13 +36,12 @@ public class CouponSpringApplication {
 		msg("START");
 		
 		//type tests with certain orders here through the test's offered functions
-		
-		test.login("Admin@admin.com", "admin", ClientType.ADMIN);
-		test.addCompany("Company's name", "lol@gmail.com", "123");
-		
-		test.login("lol@gmail.com", "123", ClientType.COMPANY);
-		test.addCoupon("1st coupon", LocalDate.now().plusDays(1));
-		test.addCoupon("2nd expired coupon", LocalDate.now().minusDays(1));
+//		test.login("Admin@admin.com", "admin", ClientType.ADMIN);
+//		test.addCompany("Company's name", "lol@gmail.com", "123");
+//		
+//		test.login("lol@gmail.com", "123", ClientType.COMPANY);
+//		test.addCoupon("1st coupon", LocalDate.now().plusDays(1));
+//		test.addCoupon("2nd expired coupon", LocalDate.now().minusDays(1));
 		
 		msg("END");
 	}
@@ -88,26 +87,26 @@ public class CouponSpringApplication {
 			coupon.setDescription("Description"+i);
 			coupon.setTitle      ("Title"+i);
 			coupon.setPrice      (random.nextInt(500)+1);
-			coupon.setStartDate  (LocalDate.of(2021, 11, random.nextInt(30)+1));
-			coupon.setEndDate    (LocalDate.of(2022, 1, random.nextInt(30)+1));
+			coupon.setStartDate  (LocalDate.of(2022, 1, random.nextInt(30)+1));
+			coupon.setEndDate    (LocalDate.of(2022, 2, random.nextInt(30)+1));
 			coupon.setImage      ("image.png");
 			coupon.setCompany    (company);
 			
 			try 
 			{
 				{
-				AdminFacade f = (AdminFacade)lm.login("Admin@admin.com", "admin", ClientType.ADMIN);
+				AdminService f = (AdminService)lm.login("Admin@gmail.com", "123", ClientType.ADMIN);
 				f.addCompany(company);
 				f.addCustomer(customer);
 				}
 				
 				{
-				CompanyFacade f = (CompanyFacade)lm.login("company"+i+"@gmail.com", "123", ClientType.COMPANY);
+				CompanyService f = (CompanyService)lm.login("company"+i+"@gmail.com", "123", ClientType.COMPANY);
 				f.addCoupon(coupon);
 				}
 				
 				{
-				CustomerFacade f = (CustomerFacade)lm.login("customer"+i+"@gmail.com", "123", ClientType.CUSTOMER);
+				CustomerService f = (CustomerService)lm.login("customer"+i+"@gmail.com", "123", ClientType.CUSTOMER);
 				f.purchaseCoupon(coupon);
 				}
 			} catch (IncorrectCredentials | ConditionsNotMet e) {
@@ -118,4 +117,8 @@ public class CouponSpringApplication {
 	
 	}
 
+	public static ConfigurableApplicationContext getCtx() {
+		return ctx;
+	}
+	
 }
