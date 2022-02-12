@@ -53,6 +53,11 @@
     <artifactId>springfox-swagger2</artifactId>
     <version>3.0.0</version>
 </dependency>
+		<!-- PostgreSQL -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
 
 	</dependencies>
 

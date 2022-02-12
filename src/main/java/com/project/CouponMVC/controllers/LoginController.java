@@ -2,10 +2,7 @@ package com.project.CouponMVC.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.project.CouponMVC.enums.ClientType;
 import com.project.CouponMVC.exceptions.IncorrectCredentials;
@@ -15,6 +12,7 @@ import com.project.CouponMVC.utils.Credentials;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LoginController extends ClientController{
 
 	@PostMapping("login")
